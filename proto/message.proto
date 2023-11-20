@@ -1,0 +1,61 @@
+syntax = "proto3";
+option go_package = "github.com/FdoJa/ServidoresFulcrum/proto";
+package grpc;
+
+service Informantes {
+    rpc AgregarBase (Base) returns (Vector);
+    rpc RenombrarBase (BaseModificada) returns (Vector);
+    rpc ActualizarValor (ActualizarSoldados) returns (Vector);
+    rpc BorrarBase (Base) returns (Vector);
+}
+
+service Consistencia { 
+    rpc ConseguirLogs (Recepcion) returns (LogList);
+    rpc EnviarDatosActualizados (Datos) returns (Recepcion);
+}
+
+message Base {
+    string sector = 1;
+    string base = 2;
+    string soldados = 3;
+}
+
+message BaseModificada {
+    string sector = 1;
+    string base = 2;
+    string actualizacion_base = 3;
+}
+
+message ActualizarSoldados {
+    string sector = 1;
+    string base = 2;
+    string actualizacion_soldados = 3;
+}
+
+message Recepcion {
+    string ok = 1;
+}
+
+message Vector {
+    int32 s1 = 1;
+    int32 s2 = 2;
+    int32 s3 = 3;
+}
+
+message Log {
+    string tiempo = 1;
+    string accion = 2;
+    string sectorAfectado = 3;
+    string baseAfectada = 4;
+    string nuevoValor = 5;
+}
+
+message LogList {
+    repeated Log listaLogs = 1;
+    repeated int32 vector = 2;
+}
+
+message Datos {
+    repeated Base listaBases = 1;
+    repeated int32 vector = 2;
+}
